@@ -11,19 +11,21 @@
 - `Makefile` exposes setup, lint, test, verify, broker, and future phase commands.
 - `scripts/broker_check.py` creates one topic, sends 1,000 local messages, and verifies
   that all 1,000 can be consumed.
-- `src/secstream/` contains the package layout reserved for the phase modules.
+- `src/secstream/` is the only importable package and contains the moved stream,
+  detector, data, and configuration modules.
 - `.github/workflows/ci.yml` runs only lint and broker-free unit tests on Python 3.11.
 - `.gitignore` prevents raw data, generated results, caches, and build artifacts from
   entering the repository.
 
-### Reused existing code
+### Reused and moved existing code
 
-- The root `secstream/` package remains the existing replay, consumer, model, training,
-  topic setup, and collector implementation for later phases.
+- The former root `secstream/` replay, consumer, model, training, topic setup, collector,
+  data, and configuration implementations were moved into `src/secstream/` unchanged
+  except for package-relative imports.
 - `tests/test_pipeline_offline.py` remains the broker-free regression test for the
   existing train, score, and metric path.
-- `README.md`, `artifacts/`, and `results/` remain in place; Phase 0 only adds the
-  project scaffolding around them.
+- `README.md`, `artifacts/`, and `results/` remain in place; the two tracked `.gitkeep`
+  files were not removed.
 
 ### Verification status
 

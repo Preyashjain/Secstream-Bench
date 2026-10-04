@@ -4,7 +4,7 @@ import time
 
 from confluent_kafka.admin import AdminClient, NewTopic
 
-from . import config
+from .. import config
 
 
 def main(argv=None):

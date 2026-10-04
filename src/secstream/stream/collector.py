@@ -9,7 +9,7 @@ from pathlib import Path
 import numpy as np
 from confluent_kafka import Consumer
 
-from . import config
+from .. import config
 
 
 def summarize(rows: list[dict]) -> dict:

@@ -8,8 +8,8 @@ from sklearn.ensemble import HistGradientBoostingClassifier
 from sklearn.metrics import precision_recall_fscore_support, roc_auc_score
 from sklearn.model_selection import train_test_split
 
-from . import config
-from .data import load
+from .. import config
+from ..data.loader import load
 
 
 def main(argv=None):

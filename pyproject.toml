@@ -33,6 +33,7 @@ line-length = 100
 exclude = ["artifacts", "results"]
 
 [tool.pytest.ini_options]
+pythonpath = ["src"]
 markers = [
   "integration: requires the Redpanda broker",
   "slow: full benchmark or sweep, never run by default",

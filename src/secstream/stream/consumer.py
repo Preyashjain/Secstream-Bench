@@ -7,8 +7,8 @@ import time
 
 from confluent_kafka import Consumer, Producer
 
-from . import config
-from .model import load_bundle, score_batch
+from .. import config
+from ..detector.model import load_bundle, score_batch
 
 
 def main(argv=None):

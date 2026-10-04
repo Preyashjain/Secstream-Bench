@@ -6,8 +6,7 @@ N ?= 20000
 COMPOSE ?= docker compose
 
 setup:
-	$(PY) -m pip install --upgrade pip
-	$(PY) -m pip install -e '.[dev]'
+	$(PY) -c "import hypothesis, pytest, ruff, secstream; print('environment ready')"
 install: setup
 
 shell:
@@ -21,17 +20,17 @@ up:
 down:
 	$(COMPOSE) down
 train:            ## synthetic data; for real data: make train SOURCE=/path/to/CICIDS2017_csvs
-	$(PY) -m secstream.train --source $(or $(SOURCE),synthetic)
+	$(PY) -m secstream.detector.train --source $(or $(SOURCE),synthetic)
 topics:
-	$(PY) -m secstream.setup_topics --partitions $(PARTITIONS) --reset
+	$(PY) -m secstream.stream.setup_topics --partitions $(PARTITIONS) --reset
 consume:          ## one worker; run in N terminals, or use `make run-workers`
-	$(PY) -m secstream.consumer
+	$(PY) -m secstream.stream.consumer
 run-workers:
-	@for i in $$(seq 1 $(WORKERS)); do $(PY) -m secstream.consumer --max-idle-s 15 & done; wait
+	@for i in $$(seq 1 $(WORKERS)); do $(PY) -m secstream.stream.consumer --max-idle-s 15 & done; wait
 produce:
-	$(PY) -m secstream.producer --rate $(RATE) --limit $(N)
+	$(PY) -m secstream.stream.producer --rate $(RATE) --limit $(N)
 collect:
-	$(PY) -m secstream.collector --expect $(N) --csv results/runs.csv --tag workers=$(WORKERS) --tag rate=$(RATE) --tag partitions=$(PARTITIONS)
+	$(PY) -m secstream.stream.collector --expect $(N) --csv results/runs.csv --tag workers=$(WORKERS) --tag rate=$(RATE) --tag partitions=$(PARTITIONS)
 test:
 	$(PY) -m pytest -q
 

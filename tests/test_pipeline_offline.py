@@ -3,9 +3,9 @@ import json
 
 import pandas as pd
 
-from secstream import train
-from secstream.collector import summarize
-from secstream.model import load_bundle, score_batch
+from secstream.detector import train
+from secstream.detector.model import load_bundle, score_batch
+from secstream.stream.collector import summarize
 
 
 def test_train_score_roundtrip(tmp_path):
