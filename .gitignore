@@ -1,0 +1,21 @@
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ruff_cache/
+*.egg-info/
+.coverage
+data/raw/
+results/*
+!results/.gitkeep
+artifacts/*
+!artifacts/.gitkeep__pycache__/
+mv .github/github/copilot-instructions.md .github/copilot-instructions.md && rmdir .github/github
+git init -b main
+cat >> .gitignore <<'EOF'
+__pycache__/
+*.pyc
+.pytest_cache/
+.ruff_cache/
+*.egg-info/
+.DS_Store

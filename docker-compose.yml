@@ -1,0 +1,37 @@
+services:
+  redpanda:
+    image: docker.redpanda.com/redpandadata/redpanda:v24.2.18
+    container_name: secstream-redpanda
+    command:
+      - redpanda
+      - start
+      - --mode=dev-container
+      - --smp=2
+      - --memory=1G
+      - --overprovisioned
+      - --kafka-addr=internal://0.0.0.0:9092,external://0.0.0.0:19092
+      - --advertise-kafka-addr=internal://redpanda:9092,external://localhost:19092
+    ports:
+      - "19092:19092"   # Kafka API for host processes (what the Python code uses)
+      - "9644:9644"     # admin API
+    healthcheck:
+      test: ["CMD-SHELL", "rpk cluster health | grep -E 'Healthy:.+true' || exit 1"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+  dev:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+    depends_on:
+      redpanda:
+        condition: service_healthy
+    environment:
+      BOOTSTRAP_SERVERS: redpanda:9092
+    volumes:
+      - .:/workspace
+    working_dir: /workspace
+    command: bash
+    stdin_open: true
+    tty: true

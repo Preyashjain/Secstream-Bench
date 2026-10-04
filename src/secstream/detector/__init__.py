@@ -1,0 +1,1 @@
+"""Detector model and scoring interfaces."""
